@@ -14,26 +14,16 @@ bool hasCycle(struct ListNode *head) {
     if there is no cycle, the faster pointer will eventually hit NULL
     No need for a helper function with this method either.   
     */
-    //base cases
-    if(head == NULL || head -> next == NULL){
-        return false;
-    }
     
     //init two pointers
     struct ListNode* point1 = head;
     struct ListNode* point2 = head;
-    while (point2 != NULL){
-        point2 = point2 -> next;
-        if(point2 == NULL){
-            return false;
-        }
-
-        if (point2 == point1){
+    while (point2 != NULL && point2 -> next != NULL){
+        point1 = point1 -> next;
+        point2 = (point2 -> next) -> next;
+        if (point1 == point2){
             return true;
         }
-        
-        point1 = point1 -> next;
-        point2 = point2 -> next;
     }
     return false;
 }
