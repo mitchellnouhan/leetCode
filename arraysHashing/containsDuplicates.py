@@ -4,14 +4,13 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        #create a frequency based hashmap 
-        freqHash = {}
+        #create an "is present" hashmap using defaultdict
+        freqHash = defaultdict(lambda: False)
         #iterate thru the array
         for num in nums:
             #if element is in hashmap, return true
-            if num in freqHash:
+            if freqHash[num]:
                 return True
-            #if element is not in hashmap, add it
-            freqHash[num] = 1
+            freqHash[num] = True
         #if you get to the end of the iteration, no duplicates!
         return False
