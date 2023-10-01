@@ -1,3 +1,4 @@
+#my homemade attempt, got a time and space complexity efficient passing solution in 15 minutes:)
 class Solution(object):
     def twoSum(self, numbers, target):
         #the big idea: assign start and end indices, figure out which index is 
