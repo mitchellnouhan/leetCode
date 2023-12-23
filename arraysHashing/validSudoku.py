@@ -1,47 +1,20 @@
-class Solution(object):
-    def myInit(self):
-        self.rowMaps = [[False for _ in range(9)] for _ in range(9)]
-        self.colMaps = [[False for _ in range(9)] for _ in range(9)]
-        self.squareMaps = [[[False for _ in range(9)] for _ in range(3)] for _ in range(3)]     
-
-    def isNumber(self, elem): 
-        if elem >= "0" and elem <= "9":
-            return True
-        return False
-
-    def processRow(self, row, elem):
-        if self.rowMaps[row][elem]:
-            return True
-        
-        self.rowMaps[row][elem] = True
-        return False
-
-    def processCol(self, col, elem):
-        if self.colMaps[col][elem]:
-            return True
-        self.colMaps[col][elem] = True
-        return False
-
-    def processSquare(self, square, elem):
-        if self.squareMaps[square[0]][square[1]][elem]:
-            return True
-        self.squareMaps[square[0]][square[1]][elem] = True
-        return False
-
-    def processElem(self, row, col, square, elem):
-        if self.isNumber(elem):
-            elem = ord(elem) - ord("0") - 1
-            return self.processRow(row, elem) or self.processCol(col, elem) or self.processSquare(square, elem)
-        return False
-
-    def isValidSudoku(self, board):
-        self.myInit()
-        for i in range(len(board)):
-            for j in range(len(board[i])):
-                elem = board[i][j]
-                row = i
-                col = j
-                square = (i // 3, j // 3)
-                if self.processElem(row,col,square,elem):
-                    return False
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rowNum, colNum = 9, 9
+        subBoxNum = 3
+        rows = [[False for i in range(rowNum)] for j in range(rowNum)]
+        cols = [[False for i in range(colNum)] for j in range(colNum)]
+        subBoxes = [[[False for i in range(rowNum)] for j in range(subBoxNum)] for k in range(subBoxNum)]
+        for row in range(len(board)):
+            for col in range(len(board[row])):
+                elem = board[row][col]
+                if elem != ".":
+                    elem = int(elem) - 1
+                    subRow = row // 3
+                    subCol = col // 3
+                    if rows[row][elem] or cols[col][elem] or subBoxes[subRow][subCol][elem]:
+                        return False
+                    rows[row][elem] = True
+                    cols[col][elem] = True
+                    subBoxes[subRow][subCol][elem] = True
         return True
