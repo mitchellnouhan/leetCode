@@ -1,19 +1,19 @@
-#use n, openCount, and closeCount to generate the valid paren combos with recursion 
-class Solution(object):
+class Solution:
     def __init__(self):
-        self.paren = []
-        self.openCount = 0
-        self.closeCount = 0
-        self.curString = ""
+        self.res = []
 
-    def helper(self, openCount, closeCount, curString, n):
-        if closeCount < openCount:
-            self.helper(openCount, closeCount + 1, curString + ')', n)
-        if openCount < n:
-            self.helper(openCount + 1, closeCount, curString + '(', n)
-        if openCount == n and closeCount == n:
-            self.paren.append(curString)
+    def addParentheses(self, o: int, c: int, s: str):
+        if not o and not c:
+            self.res.append(s)
+            return 
+        elif o == c:
+            self.addParentheses(o - 1, c, s + "(")
+        elif not o and c:
+            self.addParentheses(o, c - 1, s + ")")
+        else:
+            self.addParentheses(o - 1, c, s + "(")
+            self.addParentheses(o, c - 1, s + ")")
 
-    def generateParenthesis(self, n):
-        self.helper(self.openCount, self.closeCount, self.curString, n)
-        return self.paren     
+    def generateParenthesis(self, n: int) -> List[str]:
+        self.addParentheses(n, n, "")
+        return self.res  
