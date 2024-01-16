@@ -1,21 +1,17 @@
-#Implemented a min stack after reading leetcode's hint, using a list of (val, curren running Min pair) elements
-#taking advantage of python's built in append & pop functions along with the -1 index feature
-class MinStack(object):
+class MinStack:
 
     def __init__(self):
         self.stack = []
 
-    def push(self, val):
-        if len(self.stack) == 0 or val < self.getMin():
-            self.stack.append((val, val))
-        else:
-            self.stack.append((val, self.getMin()))
+    def push(self, val: int) -> None:
+        curMin = self.getMin() if len(self.stack) else val
+        self.stack.append([val, min(val, curMin)])
 
-    def pop(self):
-        self.stack.pop(-1)
+    def pop(self) -> None:
+        self.stack.pop()
 
-    def top(self):
-        return self.stack[-1][0]   
+    def top(self) -> int:
+        return self.stack[-1][0]
 
-    def getMin(self):
+    def getMin(self) -> int:
         return self.stack[-1][1]
