@@ -1,4 +1,3 @@
-class Solution(object):
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         maxP, b, s = 0, 0, 0
