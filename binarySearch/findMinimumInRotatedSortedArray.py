@@ -1,9 +1,8 @@
-#30 min on pen and paper, a couple min to code, worked immediately, did not peek at all
-class Solution(object):
-    def findMin(self, nums):
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
         l, r = 0, len(nums) - 1
-        while nums[l] > nums[r]:
-            m = l + (r - l) / 2
+        while l < r:
+            m = l + (r - l) // 2
             if nums[m] > nums[r]:
                 l = m + 1
             else:
