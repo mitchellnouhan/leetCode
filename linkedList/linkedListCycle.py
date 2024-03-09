@@ -1,4 +1,4 @@
-# Definition for singly-linked list.
+## Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
 #         self.val = x
@@ -7,7 +7,6 @@ class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         fast = head.next if head else None
         while fast and fast != head:
-            head = head.next
-            fast = fast.next
+            head, fast = head.next, fast.next
             fast = fast.next if fast else fast
         return True if fast else False
