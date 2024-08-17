@@ -1,33 +1,20 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution(object):
+class Solution:
     def __init__(self):
-        self.res = 0
-        self.arr = []
-        self.curInd = 0
+        self.res = []
 
-    def inOrderTrav(self, root, k):
-        if not root or self.curInd == k:
-            return 
-        
-        self.inOrderTrav(root.left, k)
+    def dfs(self, root: Optional[TreeNode]):
+        if not root:
+            return
+        self.dfs(root.left)
+        self.res.append(root.val)
+        self.dfs(root.right)
 
-        self.arr.append(root.val)
-        self.curInd += 1
-        if self.curInd == k:
-            self.res = self.arr[self.curInd - 1]
-
-        self.inOrderTrav(root.right, k)
-
-    def kthSmallest(self, root, k):
-        """
-        :type root: TreeNode
-        :type k: int
-        :rtype: int
-        """
-        self.inOrderTrav(root, k)
-        return self.res
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        self.dfs(root)
+        return self.res[k - 1]

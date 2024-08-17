@@ -1,42 +1,30 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution(object):
-    def validBST(self, root):
-        """
-        :type root: TreeNode       
-        :rtype: bool, int, int
-        """
-        #base case
-        if not root:
-            #returns validBST, treeMin, treeMax
-            return (True, float('inf'), float('-inf'))
+# Key is to return local min and local max, & handle None
+class Solution:
+    def __init__(self):
+        self.res = True
+    
+    def dfs(self, root: Optional[TreeNode]) -> List[int]:
+        if not root: return [None, None]
 
-        #check if left subtree is valid
-        left = self.validBST(root.left)
-        leftBST = left[0]
-        leftMin = left[1]
-        leftMax = left[2]
+        left, right = self.dfs(root.left), self.dfs(root.right)
+        
+        if left[1] is None and right[0] is None:
+            return [root.val, root.val]
+        elif left[1] is not None and right[0] is None:
+            self.res &= root.val > left[1]
+            return [left[0], max(left[1], root.val)]
+        elif left[1] is None and right[0] is not None:
+            self.res &= root.val < right[0]
+            return [min(root.val, right[0]), right[1]]
+        self.res &= root.val > left[1] and root.val < right[0]
+        return [left[0], right[1]]
 
-        #check if right subtree is valid
-        right = self.validBST(root.right)
-        rightBST = right[0]
-        rightMin = right[1]
-        rightMax = right[2]
-        
-        #update leftMax
-        treeMin = min(leftMin, root.val, rightMin)
-        #update rightMin
-        treeMax  = max(leftMax, root.val, rightMax)
-        
-        return (leftBST and rightBST and root.val > leftMax and root.val < rightMin, treeMin, treeMax)
-      
-    def isValidBST(self, root):
-        """
-        :type root: TreeNode
-        :rtype: bool
-        """ 
-        return self.validBST(root)[0]
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        self.dfs(root)
+        return self.res
