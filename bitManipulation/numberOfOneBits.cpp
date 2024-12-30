@@ -2,13 +2,12 @@ class Solution {
 public:
     int hammingWeight(uint32_t n) {
         int res = 0;
-        int inputBitSize = 32;
-        uint32_t bitMask = 1; 
-        for (int i = 0; i < inputBitSize; i++){
-            if (bitMask & n){
+        uint32_t input = n;
+        uint32_t mask = 0x00000001;
+        for (int i = 0; i < 32; i++){
+            if(input & mask)
                 res++;
-            }
-            bitMask <<= 1;
+            input >>= 1;
         }
         return res;
     }
