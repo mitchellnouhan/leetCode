@@ -8,20 +8,20 @@
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
- INVERT!!
+ INVERT!! 
  
  */
 
 class Solution {
 public:
-    bool dfs(TreeNode* root, int local_min, int local_max){
+    bool dfs(TreeNode* root, long local_min, long local_max){
         if(!root) return true;
 
-        if(!(local_min < root -> val && root -> val < local_max)) return false;
+        if(!(local_min < (long)root -> val && (long)root -> val < local_max)) return false;
 
         return dfs(root -> left, local_min, root -> val) && dfs(root -> right, root -> val, local_max);
     }
     bool isValidBST(TreeNode* root) {
-        return dfs(root, INT_MIN, INT_MAX);
+        return dfs(root, LONG_MIN, LONG_MAX);
     }
 };

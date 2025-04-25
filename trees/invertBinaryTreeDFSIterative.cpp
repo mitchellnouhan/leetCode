@@ -12,30 +12,18 @@
 
 class Solution {
 public:
-    void dfs_iterative(TreeNode* root){
-        deque<TreeNode*> q;
-        if(root){
-            q.push_back(root);
-        }
-        
-
-        while (q.size()){
-            TreeNode* cur = q.back();
-            q.pop_back();
-            TreeNode* tmp = cur -> left;
-            cur -> left = cur -> right;
-            cur -> right = tmp;
-            if(cur -> left){
-                q.push_back(cur -> left);
-            }
-            if(cur -> right){
-                q.push_back(cur -> right);
-            }
-        }
-    }
-
     TreeNode* invertTree(TreeNode* root) {
-        dfs_iterative(root);
+        if (!root) return root;
+        
+        stack<TreeNode*> s;
+        s.push(root);
+        while(s.size()){
+            TreeNode* cur = s.top();
+            s.pop();
+            swap(cur -> left, cur -> right);
+            if(cur -> left) s.push(cur -> left);
+            if(cur -> right) s.push(cur -> right);
+        }
         return root;
     }
 };
